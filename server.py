@@ -5,6 +5,7 @@ from cryptography.fernet import Fernet
 from forms import PaymentForm
 from credit_card_processor import *
 from database import *
+from server_functions import *
 
 # Application Variables
 database_name = 'transactions.db'
@@ -47,11 +48,9 @@ def payment():
     # Logic used when the user clicks "Submit" on the payment page
     if form.validate_on_submit():
         form_data_dict = request.form.to_dict()
-        print(form_data_dict)
         json_data = json.dumps(form_data_dict)
-        print(json_data)
         authorization = json.loads(authorize_transaction(json_data))
-        print(authorization)
+        write_to_db(form_data_dict, authorization)
         auth = authorization.get('approval_status')
         if auth == 'approve':
             return render_template('approved.html', json_string=authorization)

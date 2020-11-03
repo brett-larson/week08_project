@@ -10,7 +10,6 @@
 import sys
 import sqlite3
 import json
-import csv
 
 
 def create_database_and_tables(database_name):
@@ -45,10 +44,12 @@ def create_database_and_tables(database_name):
 def write_transaction_data(transaction, database_name):
     """This function writes investment data to the database"""
 
-    sql_insert_string = f"INSERT INTO transactions VALUES ('{transaction['Symbol']}', " \
-                        f"'{transaction['Date']}', '{transaction['Open']}', " \
-                        f"'{transaction['High']}', '{transaction['Low']}', " \
-                        f"'{transaction['Close']}', '{transaction['Volume']}')"
+    print(transaction)
+    sql_insert_string = f"INSERT INTO transactions VALUES ('{transaction['current_date_time']}', " \
+                        f"'{transaction['transaction_number']}', '{transaction['name']}', " \
+                        f"'{transaction['card_number']}', '{transaction['exp_date']}', " \
+                        f"'{transaction['zip_code']}', '{transaction['purchase_amt']}', " \
+                        f"'{transaction['approval_status']}', '{transaction['authorization_code']}')"
 
     try:
         conn = sqlite3.connect(database_name)
