@@ -1,10 +1,17 @@
-import json
+"""
+    Author: Brett Larson
+    Date: 11/04/2020
 
-from flask import Flask, render_template, request, jsonify
+    Functionality:
+        The server.py file provides web server functionality, and calls to additional Python files
+        to complete credit card authorization process flow.
+"""
+
+# Required Imports
+from flask import Flask, render_template, request
 from cryptography.fernet import Fernet
 from forms import PaymentForm
 from credit_card_processor import *
-from database import *
 from server_functions import *
 
 # Application Variables

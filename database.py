@@ -1,19 +1,22 @@
 """
     Author: Brett Larson
-    Date: 11/01/2020
+    Date: 11/04/2020
 
     Functionality:
-        The database file acts as the server writing transaction data to the database.
+        The database.py file provides functions for creating and writing transactions to the credit
+        card processing application's database.
 """
 
 # Required Imports
 import sys
 import sqlite3
-import json
 
 
 def create_database_and_tables(database_name):
-    """This function creates a database with tables to hold transaction data"""
+    """
+    This method creates the requested database, and adds one table to it,
+    :param database_name: The name of the database to create,
+    """
 
     try:
         conn = sqlite3.connect(database_name)
@@ -42,7 +45,11 @@ def create_database_and_tables(database_name):
 
 
 def write_transaction_data(transaction, database_name):
-    """This function writes investment data to the database"""
+    """
+    This function inserts transaction data into the database.
+    :param transaction: A dictionary with relevant transaction data.
+    :param database_name: The name of the database to write to.
+    """
 
     print(transaction)
     sql_insert_string = f"INSERT INTO transactions VALUES ('{transaction['current_date_time']}', " \
@@ -59,33 +66,11 @@ def write_transaction_data(transaction, database_name):
         conn.close()
     except sqlite3.OperationalError:
         print(f"There was an error attempting to add data to the database. Please review "
-              f"transaction data before continuing. The program will now exit.")
+              f"transaction data before continuing.")
         conn.rollback()
         conn.close()
-        sys.exit(1)
     except sqlite3.IntegrityError:
         print(f"Data you are attempting to add is invalid or not formatted properly. Please review "
-              f"data. The program will now exit.")
+              f"data.")
         conn.rollback()
         conn.close()
-        sys.exit(1)
-
-
-def read_json_investment_data(filename):
-    """This function opens the JSON file provided when the function is called
-    :returns data set of the data from the JSON file
-    """
-
-    # Attempt to open the file provided and copy its contents into the data_set variable
-    try:
-        with open(filename) as json_file:
-            data_set = json.load(json_file)
-
-    except FileNotFoundError:
-        print(f"WARNING: The file {filename} does not exist. Please confirm the file name and "
-              f"location before trying again. The program will now exit.")
-        json_file.close()
-        sys.exit(1)
-
-    json_file.close()
-    return data_set
