@@ -1,6 +1,12 @@
 """
+    Author: Brett Larson
+    Date: 11/04/2020
 
+    Functionality:
+        The server_functions.py file provides various functions to the web server.
 """
+
+# Required Imports
 import string
 import random
 from datetime import datetime
@@ -8,6 +14,11 @@ from database import *
 
 
 def write_to_db(web_dict, vendor_dict):
+    """
+    This function allows the server to write data to the database.
+    :param web_dict: Dictionary containing customer information
+    :param vendor_dict: Dictionary containing vendor provided information
+    """
 
     database_name = 'transactions.db'
 
@@ -16,30 +27,16 @@ def write_to_db(web_dict, vendor_dict):
     web_dict.update(vendor_dict)
     web_dict['transaction_number'] = transaction_number
     web_dict['current_date_time'] = current_date_time
-    print(web_dict)
-    json_obj = json.dumps(web_dict)
-    print(web_dict)
     write_transaction_data(web_dict, database_name)
 
 
 def get_transaction_guid():
     """
-
-    :return:
+    This function provides a unique transaction ID (GUID) for each transaction
+    :return: Unique string of numbers representing the transaction ID
     """
 
     numbers = string.digits
     transaction_number = ''.join((random.choice(numbers) for i in range(10)))
 
     return transaction_number
-
-
-def combine_dictionaries(web_dict, vendor_dict):
-    """
-
-    :param web_dict:
-    :param vendor_dict:
-    :return:
-    """
-    web_dict.update(vendor_dict)
-    return web_dict
