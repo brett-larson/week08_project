@@ -8,7 +8,6 @@
 """
 
 # Required Imports
-import sys
 import sqlite3
 
 
@@ -41,7 +40,6 @@ def create_database_and_tables(database_name):
               f" already exists. Please review and try again. The program will now exit.")
         conn.rollback()
         conn.close()
-        sys.exit(1)
 
 
 def write_transaction_data(transaction, database_name):
@@ -51,7 +49,6 @@ def write_transaction_data(transaction, database_name):
     :param database_name: The name of the database to write to.
     """
 
-    print(transaction)
     sql_insert_string = f"INSERT INTO transactions VALUES ('{transaction['current_date_time']}', " \
                         f"'{transaction['transaction_number']}', '{transaction['name']}', " \
                         f"'{transaction['card_number']}', '{transaction['exp_date']}', " \
