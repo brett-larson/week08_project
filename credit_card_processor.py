@@ -6,6 +6,9 @@
         This Python file represents the credit card processing vendor that the credit card app
         server calls to receive an approval or declined message. In this case, approval is based
         on the amount of the purchase.
+
+        This code is based on the week four assignment with additional modifications to integrate
+        with the new program features and functionality.
 """
 
 # Required imports
