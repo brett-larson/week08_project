@@ -56,8 +56,7 @@ def payment():
     if form.validate_on_submit():
         form_data_dict = request.form.to_dict()
         json_data = json.dumps(form_data_dict)
-        authorization = json.loads(authorize_transaction(json_data))
-        write_to_db(form_data_dict, authorization)
+        authorization = approval_process(form_data_dict, json_data)
         auth = authorization.get('approval_status')
         if auth == 'approve':
             return render_template('approved.html', json_string=authorization)

@@ -32,7 +32,8 @@ def authorize_transaction(json_data):
         decision_dict = build_approval_dict(approval, auth_code, masked_card_number)
         json_decision = json.dumps(decision_dict)
     elif approval == 'decline':
-        decision_dict = build_decline_dict(approval, masked_card_number)
+        auth_code = 0
+        decision_dict = build_decline_dict(approval,auth_code, masked_card_number)
         json_decision = json.dumps(decision_dict)
 
     return json_decision
@@ -95,15 +96,17 @@ def build_approval_dict(approval, auth_code, card_num):
     return approval_dict
 
 
-def build_decline_dict(approval, card_num):
+def build_decline_dict(approval,auth_code, card_num):
     """
     Function that builds the dictionary when a card is declined.
+    :param auth_code: generated authorization code (0 for declines)
     :param approval: approval status (should always be "decline" for this function)
     :param card_num: Last four digits of the credit card number
     :return: dictionary with decline data
     """
 
     decline_dict = {"approval_status": approval,
+                    "authorization_code": auth_code,
                     "last_four_card_number": card_num}
 
     return decline_dict
